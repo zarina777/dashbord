@@ -3,6 +3,9 @@ import { NavLink, Outlet } from "react-router-dom";
 import Container from "../container/Container";
 
 const Layout = () => {
+  function logout() {
+    localStorage.removeItem("info");
+  }
   return (
     <div>
       <div className="p-7 bg-blue-500">
@@ -18,6 +21,9 @@ const Layout = () => {
           </NavLink>
           <NavLink className={({ isActive }) => `text-2xl text-white p-4 ${isActive ? "border border-white rounded-md" : ""}`} to="/users">
             Users
+          </NavLink>
+          <NavLink className="text-2xl text-white p-4 rounded-md hover:border hover:border-white" onClick={logout} to="/login">
+            Log out
           </NavLink>
         </Container>
       </div>
