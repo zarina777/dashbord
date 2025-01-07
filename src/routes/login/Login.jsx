@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Container from "../../components/container/Container";
 
 const Login = () => {
@@ -15,8 +17,11 @@ const Login = () => {
     try {
       let res = await axios.post("https://server-inky-eight-70.vercel.app/auth/login/admin", data);
       let info = await res.data;
+      toast.success("Successfully logged in!");
       localStorage.setItem("info", JSON.stringify(info));
-      navigate("/");
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
     } catch (err) {
       if (err.response && err.response.data && err.response.data.message) {
         setError("server", { message: err.response.data.message });
@@ -34,6 +39,7 @@ const Login = () => {
   const navigate = useNavigate();
   return (
     <Container className="p-10 flex flex-col items-center justify-center bg-blue-100 h-[100vh]">
+      <ToastContainer />
       <h1 className="text-white text-[50px] font-extrabold mb-12">Log in</h1>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5 px-20 justify-around  w-full rounded-lg">
         <label className="text-2xl text-white">Enter username</label>
